@@ -137,6 +137,13 @@ __WELCOME__
         rm -f /.firstboot.tmp
 fi
 
+if [ ! -f /var/www/MISP/app/files/scripts/stixtest.py ]; then
+    echo "Extracting MISP ./files/ contents into mounted filesystem"
+    mkdir -p /var/www/MISP/app/files
+    tar -C "/var/www/MISP/app/files" -xzpf /root/misp-files.tar.gz
+    chown -R www-data:www-data /var/www/MISP/app/files
+fi
+
 # Make MISP live - this isn't ideal, as it means taking an instance
 # non-live will make it live again if the container restarts.  That seems
 # better than the default which is that MISP is non-live on container restart.
